@@ -17,7 +17,7 @@ const Dashboard = () => {
     const fetchUserDetails = async () => {
       try {
         const res = await axios.get(
-          `${serverUrl}/getUserDetails`,
+          `${serverUrl}/api/v1/getUserDetails`,
           { withCredentials: true }
         );
         setTasks(res.data.tasks);
