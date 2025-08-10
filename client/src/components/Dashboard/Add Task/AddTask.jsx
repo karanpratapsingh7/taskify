@@ -18,7 +18,7 @@ const AddTask = ({ setAddTaskDiv }) => {
     e.preventDefault();
     try {
       const res = await axios.post(
-        `${serverUrl}/addTask`,
+        `${serverUrl}api/v1/addTask`,
         Values,
         {
           withCredentials: true,
