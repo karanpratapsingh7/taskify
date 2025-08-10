@@ -52,7 +52,7 @@ const login = async (req, res) => {
           res.cookie("taskifyUserToken", token, {
             httpOnly: true,
             maxAge: 30 * 24 * 60 * 60 * 1000,
-            secure: process.env.NODE_ENV === "production",
+            secure:true,
             sameSite: "None",
           });
           return res.status(200).json({ success: "Login Success" });
