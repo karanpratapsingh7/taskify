@@ -27,7 +27,8 @@ const register = async (req, res) => {
       return res.status(200).json({ success: "Registered Successfully" });
     }
   } catch (error) {
-    return res.status(404).json({ error: "Internal server error!" });
+    console.error("Register error:", error);
+    return res.status(500).json({ error: "Internal server error!" });
   }
 };
 
@@ -41,6 +42,10 @@ const login = async (req, res) => {
     const checkUser = await User.findOne({ email });
     if (checkUser) {
       bcrypt.compare(password, checkUser.password, (err, data) => {
+        if (err) {
+          console.error("Bcrypt compare error:", err);
+          return res.status(500).json({ error: "Internal server error!" });
+        }
         if (data) {
           const token = jwt.sign(
             { id: checkUser._id, email: checkUser.email },
@@ -52,8 +57,8 @@ const login = async (req, res) => {
           res.cookie("taskifyUserToken", token, {
             httpOnly: true,
             maxAge: 30 * 24 * 60 * 60 * 1000,
-            secure:true,
-            sameSite: "None",
+            secure: process.env.NODE_ENV === "production",  // secure only in production
+            sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
           });
           return res.status(200).json({ success: "Login Success" });
         } else {
@@ -64,8 +69,8 @@ const login = async (req, res) => {
       return res.status(400).json({ error: "Invalid Credentials" });
     }
   } catch (error) {
-    console.log(error);
-    return res.status(404).json({ error: "Internal server error!" });
+    console.error("Login error:", error);
+    return res.status(500).json({ error: "Internal server error!" });
   }
 };
 
@@ -73,44 +78,50 @@ const login = async (req, res) => {
 const userDetails = async (req, res) => {
   try {
     const { user } = req;
-    const getDetails = await User.findById(user._id)
+    const getDetails = await User.findById(user.id)
       .populate("tasks")
       .select("-password");
     if (getDetails) {
-      const allTasks = getDetails.tasks;
+      const allTasks = getDetails.tasks || [];
       let yetToStart = [];
       let inProgress = [];
       let completed = [];
-      allTasks.map((items) => {
-        if (items.status == "yetToStart") {
-          yetToStart.push(items);
-        } else if (items.status == "inProgress") {
-          inProgress.push(items);
-        } else {
-          completed.push(items);
+      allTasks.forEach((item) => {
+        if (item.status === "yetToStart") {
+          yetToStart.push(item);
+        } else if (item.status === "inProgress") {
+          inProgress.push(item);
+        } else if (item.status === "completed") {
+          completed.push(item);
         }
       });
       return res.status(200).json({
         success: "success",
-        tasks: [{ yetToStart }, { inProgress }, { completed }],
+        tasks: { yetToStart, inProgress, completed },
       });
+    } else {
+      return res.status(404).json({ error: "User not found" });
     }
   } catch (error) {
-    //console.log(error);
-    return res.status(404).json({ error: "Internal server error!" });
+    console.error("UserDetails error:", error);
+    return res.status(500).json({ error: "Internal server error!" });
   }
 };
 
 //logout
-
 const logout = async (req, res) => {
   try {
     res.clearCookie("taskifyUserToken", {
       httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
     });
-    res.json({ message: "Logged out" });
+    return res.json({ message: "Logged out" });
   } catch (error) {
-    return res.status(404).json({ error: "Internal server error!" });
+    console.error("Logout error:", error);
+    return res.status(500).json({ error: "Internal server error!" });
   }
 };
+
 module.exports = { register, login, userDetails, logout };
+
