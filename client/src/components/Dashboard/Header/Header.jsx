@@ -2,12 +2,13 @@ import React from "react";
 import { IoLogOutOutline } from "react-icons/io5";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { serverUrl } from "../../../App";
 const Header = ({ setAddTaskDiv }) => {
   const navigate = useNavigate();
   const logout = async () => {
     try {
       const res = await axios.post(
-        "http://localhost:1000/api/v1/logout",
+        `${serverUrl}/logout`,
         {},
         { withCredentials: true }
       );
