@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import EditTask from "../EditTask/EditTask";
+import { serverUrl } from "../../../App";
 const AddTask = ({ setAddTaskDiv }) => {
   const [Values, setValues] = useState({
     title: "",
@@ -17,7 +18,7 @@ const AddTask = ({ setAddTaskDiv }) => {
     e.preventDefault();
     try {
       const res = await axios.post(
-        "http://localhost:1000/api/v1/addTask",
+        `${serverUrl}/addTask`,
         Values,
         {
           withCredentials: true,
