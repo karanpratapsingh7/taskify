@@ -9,7 +9,7 @@ app.use(cookieParser());
 
 app.use(
   cors({
-    origin: ["https://taskify-hazel-mu.vercel.app"],
+    origin: ["https://taskify-hazel-mu.vercel.app/"],
     credentials: true,
   })
 );
