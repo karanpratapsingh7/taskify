@@ -18,7 +18,7 @@ const Register = () => {
     e.preventDefault();
     try {
       const res = await axios.post(
-        `${serverUrl}/register`,
+        `${serverUrl}/api/v1/register`,
         Values
       );
       setValues({
