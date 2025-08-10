@@ -3,20 +3,23 @@ import Register from "./pages/Registeration/Register";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import Login from "./pages/Login/Login";
 import Dashboard from "./pages/Dashboard/Dashboard";
-export const serverUrl="https://taskifyapp-1yyh.onrender.com"
+export const serverUrl="https://taskifyapp-1yyh.onrender.com/api/v1"
+
+
+
 const App = () => {
-  const navigate = useNavigate();
-  useEffect(() => {
-    if (localStorage.getItem("userLoggedIn")) {
-      navigate("/dashboard");
-    } else {
-      navigate("/login");
-    }
-  }, []);
+  const isLoggedIn = localStorage.getItem("userLoggedIn");
 
   return (
     <div>
       <Routes>
+       
+        <Route
+          path="/"
+          element={
+            isLoggedIn ? <Navigate to="/dashboard" /> : <Navigate to="/login" />
+          }
+        />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={<Dashboard />} />
@@ -25,4 +28,7 @@ const App = () => {
   );
 };
 
+
+
 export default App;
+
