@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { serverUrl } from "../../App";
 const Login = () => {
   const navigate = useNavigate();
   const [Values, setValues] = useState({
@@ -15,7 +16,7 @@ const Login = () => {
   const submit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:1000/api/v1/login", Values, {
+      await axios.post(`${serverUrl}/login`, Values, {
         withCredentials: true,
       });
 
