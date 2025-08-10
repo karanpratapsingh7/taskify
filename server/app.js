@@ -21,11 +21,12 @@ app.use(
 
 const usersApi = require("./controllers/user");
 const tasksApi = require("./controllers/task");
+const PORT = process.env.PORT || 8001;
 
 app.use(express.json());
 app.use("/api/v1", usersApi);
 app.use("/api/v1", tasksApi);
 
-app.listen(process.env.PORT, () => {
+app.listen(PORT, () => {
   console.log(`Server Started : ${process.env.PORT}`);
 });
