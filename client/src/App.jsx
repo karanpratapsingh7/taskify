@@ -3,6 +3,7 @@ import Register from "./pages/Registeration/Register";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import Login from "./pages/Login/Login";
 import Dashboard from "./pages/Dashboard/Dashboard";
+export const serverUrl="https://taskifyapp-1yyh.onrender.com"
 const App = () => {
   const navigate = useNavigate();
   useEffect(() => {
