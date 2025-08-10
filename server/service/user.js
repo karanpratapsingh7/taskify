@@ -74,7 +74,6 @@ const login = async (req, res) => {
   }
 };
 
-//getUserDetails
 const userDetails = async (req, res) => {
   try {
     const { user } = req;
