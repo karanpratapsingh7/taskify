@@ -7,6 +7,7 @@ import StackTitle from "../../components/Dashboard/StackTitle/StackTitle";
 import AddTask from "../../components/Dashboard/Add Task/AddTask";
 import axios from "axios";
 import EditTask from "../../components/Dashboard/EditTask/EditTask";
+import { serverUrl } from "../../App";
 const Dashboard = () => {
   const [AddTaskDiv, setAddTaskDiv] = useState("hidden");
   const [editTaskDiv, setEditTaskDiv] = useState("hidden");
@@ -16,7 +17,7 @@ const Dashboard = () => {
     const fetchUserDetails = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:1000/api/v1/getUserDetails",
+          `${serverUrl}/getUserDetails`,
           { withCredentials: true }
         );
         setTasks(res.data.tasks);
