@@ -16,7 +16,7 @@ const Login = () => {
   const submit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(`${serverUrl}/api/v1/login`, Values, {
+      await axios.post(`${serverUrl}/login`, Values, {
         withCredentials: true,
       });
 
