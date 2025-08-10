@@ -7,10 +7,15 @@ const cors = require("cors");
 
 app.use(cookieParser());
 
+const allowedOrigins=["https://taskify-hazel-mu.vercel.app", 
+  "http://localhost:5173"
+];
+
 app.use(
   cors({
-    origin: ["https://taskify-hazel-mu.vercel.app/"],
+    origin: allowedOrigins,
     credentials: true,
+    
   })
 );
 
