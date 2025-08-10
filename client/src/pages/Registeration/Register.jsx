@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { serverUrl } from "../../App";
 const Register = () => {
   const navigate = useNavigate();
   const [Values, setValues] = useState({
@@ -17,7 +18,7 @@ const Register = () => {
     e.preventDefault();
     try {
       const res = await axios.post(
-        "http://localhost:1000/api/v1/register",
+        `${serverUrl}/register`,
         Values
       );
       setValues({
