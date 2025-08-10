@@ -8,7 +8,7 @@ const Header = ({ setAddTaskDiv }) => {
   const logout = async () => {
     try {
       const res = await axios.post(
-        `${serverUrl}/api/v1/logout`,
+        `${serverUrl}/logout`,
         {},
         { withCredentials: true }
       );
