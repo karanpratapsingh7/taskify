@@ -17,7 +17,7 @@ const EditTask = ({ setEditTaskDiv, EditTaskId }) => {
     const fetch = async () => {
       try {
         const task = await axios.get(
-          `${serverUrl}/getTask/${EditTaskId}`,
+          `${serverUrl}/api/v1/getTask/${EditTaskId}`,
           { withCredentials: true }
         );
         setValues(task.data.taskDetails);
@@ -32,7 +32,7 @@ const EditTask = ({ setEditTaskDiv, EditTaskId }) => {
     e.preventDefault();
     try {
       const res = await axios.put(
-        `${serverUrl}/editTask/${id}`,
+        `${serverUrl}/api/v1/editTask/${id}`,
         Values,
         {
           withCredentials: true,
@@ -50,7 +50,7 @@ const EditTask = ({ setEditTaskDiv, EditTaskId }) => {
     e.preventDefault();
     try {
       const res = await axios.delete(
-        `${serverUrl}/deleteTask/${id}`,
+        `${serverUrl}/api/v1/deleteTask/${id}`,
         {
           withCredentials: true,
         }
